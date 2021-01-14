@@ -2,6 +2,7 @@ package org.zerock.mapper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -60,26 +61,50 @@ public class BoardMapperTests {
 	}
 	@Test
 	public void testRead() {
-		BoardVO board = mapper.read(5L);
+		BoardVO board = new BoardVO();
+		board.setTitle("새로 작성하는 글 select key");
+		board.setContent("새로 작성하는 내용 select key");
+		board.setWriter("newbie");
 		
-		log.info(board);
+		mapper.insertSelectKey(board);
+		BoardVO readBoard = mapper.read(board.getBno());
+		
+		assertNotNull(readBoard);
+		assertEquals(readBoard.getBno(), board.getBno());
 	}
 	
 	@Test
 	public void testDelete() {
-		log.info("delete count : " + mapper.delete(3L));
+		BoardVO board = new BoardVO();
+		board.setTitle("새로 작성하는 글 select key");
+		board.setContent("새로 작성하는 내용 select key");
+		board.setWriter("newbie");
+		
+		mapper.insertSelectKey(board);
+		int before = mapper.getList().size();
+		
+		int cnt = mapper.delete(board.getBno());
+		
+		assertEquals(1, cnt);
+		int after = mapper.getList().size();
+		assertEquals(before-1, after);
 	}
 	
 	@Test
 	public void testUpdate() {
 		BoardVO board = new BoardVO();
-		board.setBno(5L);
-		board.setTitle("수정된 제목");
-		board.setContent("수정된 내용");
-		board.setWriter("user00");
+		board.setTitle("새로 작성하는 글 select key");
+		board.setContent("새로 작성하는 내용 select key");
+		board.setWriter("newbie");
 		
-		int count = mapper.update(board);
+		mapper.insertSelectKey(board);
+		board.setTitle("변경된 제목");
+		board.setContent("변경된 내용");
+		int cnt = mapper.update(board);
+		assertEquals(1, cnt);
 		
-		log.info("update count : " + count);
+		BoardVO updateVO = mapper.read(board.getBno());
+		assertEquals("변경된 제목", updateVO.getTitle());
+		assertEquals("변경된 내용", updateVO.getContent());
 	}
 }
