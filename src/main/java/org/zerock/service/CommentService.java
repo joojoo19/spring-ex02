@@ -8,12 +8,12 @@ import org.zerock.domain.CommentVO;
 public interface CommentService {
 	public void register(CommentVO comment);
 
-	public CommentVO get(Long bno); 
+	public CommentVO get(Long cno); 
 
-	/* public boolean modify(CommentVO comment); */
+	public boolean modify(CommentVO comment);
 
 	public boolean remove(Long cno);
 
-	/* public List<CommentVO> getList(); */
+	public List<CommentVO> getList();
 	
 }
