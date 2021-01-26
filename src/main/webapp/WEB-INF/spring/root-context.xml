@@ -18,6 +18,7 @@
 			value="jdbc:log4jdbc:oracle:thin:@db202101121035_high?TNS_ADMIN=/myworkspace/home/opc/wallet"></property>
 		<property name="username" value="admin"></property>
 		<property name="password" value="Asdfghjkl123"></property>
+		<property name="maximumPoolSize" value="2"></property>
 	</bean>
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
 		destroy-method="close">

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -23,13 +24,29 @@ public class BoardMapperTests {
 	
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper mapper;
-	
+
 	@Test
 	public void testGetList() {
 		List<BoardVO> list = mapper.getList();
 		assertNotEquals(list.size(), 0);
 	}
-	
+
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria(1, 5);
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		assertEquals(5, list.size());
+		
+		cri = new Criteria(1, 10);
+		list = mapper.getListWithPaging(cri);
+		
+		assertEquals(10, list.size());
+		
+		list.forEach(board -> log.info("NUMBER : "+board.getBno()));
+		
+	}
+
 	@Test
 	public void testInsert() {
 		BoardVO board = new BoardVO();
@@ -56,7 +73,7 @@ public class BoardMapperTests {
 		int after = mapper.getList().size();
 		
 		assertEquals(before+1, after);
-		assertNotEquals(board.getBno(), 0L);
+		assertNotEquals(board.getBno(), new Long(0));
 		
 	}
 	@Test
@@ -106,5 +123,59 @@ public class BoardMapperTests {
 		BoardVO updateVO = mapper.read(board.getBno());
 		assertEquals("변경된 제목", updateVO.getTitle());
 		assertEquals("변경된 내용", updateVO.getContent());
+	}
+	
+	@Test
+	public void testSearch1() {
+		Criteria cri = new Criteria();
+		cri.setType("T");
+		cri.setKeyword("테스트");
+		
+		mapper.getListWithPaging(cri);
+	}
+	
+	@Test
+	public void testSearch2() {
+		Criteria cri = new Criteria();
+		cri.setType("C");
+		cri.setKeyword("테스트");
+		
+		mapper.getListWithPaging(cri);
+	}
+	
+	@Test
+	public void testSearch3() {
+		Criteria cri = new Criteria();
+		cri.setType("W");
+		cri.setKeyword("테스트");
+		
+		mapper.getListWithPaging(cri);
+	}
+	
+	@Test
+	public void testSearch4() {
+		Criteria cri = new Criteria();
+		cri.setType("TC");
+		cri.setKeyword("테스트");
+		
+		mapper.getListWithPaging(cri);
+	}
+	
+	@Test
+	public void testSearch5() {
+		Criteria cri = new Criteria();
+		cri.setType("TW");
+		cri.setKeyword("테스트");
+		
+		mapper.getListWithPaging(cri);
+	}
+	
+	@Test
+	public void testSearch6() {
+		Criteria cri = new Criteria();
+		cri.setType("TCW");
+		cri.setKeyword("테스트");
+		
+		mapper.getListWithPaging(cri);
 	}
 }
