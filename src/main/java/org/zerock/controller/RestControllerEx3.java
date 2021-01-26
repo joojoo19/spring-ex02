@@ -1,5 +1,6 @@
 package org.zerock.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,5 +59,30 @@ public class RestControllerEx3 {
 		
 		
 		return "method6";
+	}
+	
+	// consumes 값은 mime type
+	@RequestMapping(path = "/ex7", consumes = "text/plain") 
+	public String method7(@RequestBody String body) {
+		log.info("----- method7 body : " + body +"-----");
+		
+		
+		return "method7";
+	}
+	
+	@RequestMapping(path = "/ex8", consumes = MediaType.APPLICATION_JSON_VALUE) 
+	public String method8(@RequestBody String body) {
+		log.info("----- method8 body : " + body +"-----");
+		
+		
+		return "method8";
+	}
+	// consumes는 request header (content-type)와 연관있음
+	@RequestMapping(path = "/ex9", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE}) 
+	public String method9(@RequestBody String body) {
+		log.info("----- method9 body : " + body +"-----");
+		
+		
+		return "method9";
 	}
 }
