@@ -1,8 +1,10 @@
 package org.zerock.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zerock.domain.Rest1;
 
 import lombok.extern.log4j.Log4j;
 
@@ -40,5 +42,21 @@ public class RestControllerEx3 {
 		
 		
 		return val+age;
+	}
+	
+	@RequestMapping("/ex5") 
+	public String method5(@RequestBody String a) {
+		log.info("----- method5 " + a +"-----");
+		
+		
+		return "method5";
+	}
+	
+	@RequestMapping("/ex6") 
+	public String method6(@RequestBody Rest1 body) {
+		log.info("----- method6 body : " + body +"-----");
+		
+		
+		return "method6";
 	}
 }
