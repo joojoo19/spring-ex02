@@ -69,10 +69,12 @@ public class SampleController {
 		return new String[] {"category : " + cat, "productid : " + pid};
 	}
 	
-	@PostMapping("/ticket")
+	@PostMapping("/ticket") 
 	public Ticket convert(@RequestBody Ticket ticket) {
 		log.info("convert ticket : " + ticket);
 		
 		return ticket;
+		
+		// body 입력 {"tno":11, "owner":"hong", "grade":"S"}
 	}
 }
