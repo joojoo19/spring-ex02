@@ -32,7 +32,7 @@ public class ReplyController {
 	 								// request header의 content type과 연관
 	@PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {
-		log.info(vo);
+		log.info("register vo : " +vo);
 		int cnt = service.register(vo);
 		log.info(cnt);
 		if(cnt == 1) {
@@ -46,19 +46,22 @@ public class ReplyController {
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
 		Criteria cri = new Criteria(page, 10);
 		List<ReplyVO> list = service.getList(cri, bno);
+		
+		log.info(list);
 		return new ResponseEntity<List<ReplyVO>>(list, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{rno}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno") Long rno) {
 		ReplyVO vo = service.get(rno);
-		
+		log.info(vo);
 		return new ResponseEntity<ReplyVO>(vo, HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value= "/{rno}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> remove(@PathVariable("rno") Long rno) {
 		int cnt = service.remove(rno);
+		log.info(cnt);
 		if(cnt == 1) {
 			return new ResponseEntity<>("success", HttpStatus.OK);
 		} else {
