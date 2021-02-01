@@ -58,7 +58,28 @@
 						});
 			});
 </script>
-
+<style type="text/css">
+a {
+	color: black;
+	text-decoration: none;
+}
+a:link {
+	color: black;
+	text-decoration: none;
+}
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+a:hover {
+	color: black;
+	text-decoration: none;
+}
+a:active {
+	color: black;
+	text-decoration: none;
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -91,7 +112,10 @@
 									<c:param name="keyword" value="${pageMaker.cri.keyword }" />
 								</c:url>
 								<td><a href="${boardLink }"><c:out
-											value="${board.title}" /></a></td>
+											value="${board.title}" />
+											<c:if test="${board.replyCnt gt 0 }">
+								<span class="badge badge-primary">${board.replyCnt }</span></c:if>
+											</a></td>
 								<td><c:out value="${board.writer}" /></td>
 								<td><fmt:formatDate value="${board.regdate}"
 										pattern="yyyy-MM-dd HH:mm" /></td>
