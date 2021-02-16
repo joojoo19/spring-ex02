@@ -168,7 +168,10 @@ $(document).ready(function() {
 						</tr>
 						<tr>
 							<td colspan="4"><textarea cols="30" rows="9"
-									class="form-control" name="content"><c:out value="${board.content }"/> </textarea></td>
+									class="form-control" name="content"><c:out value="${board.content }"/></textarea></td>
+						</tr>
+												<tr>
+							<td colspan="4"><img class="img-fluid" src="/static/${board.filename }"></td>
 						</tr>
 					</tbody>
 				</table>

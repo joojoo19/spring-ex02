@@ -26,10 +26,10 @@
 </select>
 
 <select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
-<![CDATA[SELECT bno, title, content, writer, regdate, updatedate, replycnt
+<![CDATA[SELECT bno, title, content, writer, regdate, updatedate, replycnt, filename
 FROM
 (SELECT ROW_NUMBER() OVER (ORDER BY bno DESC) rn,
-bno, title, content, writer, regdate, updatedate, replycnt
+bno, title, content, writer, regdate, updatedate, replycnt, filename
 FROM tb1_board
 ]]>
 	 <include refid="criteria"></include>
@@ -44,8 +44,8 @@ WHERE rn BETWEEN (#{pageNo} -1) * #{amount} + 1 AND #{pageNo} * #{amount}]]>
 </select>
 
 <insert id="insert">
-insert into tb1_board (bno,title,content,writer)
-values (seq_board.nextval, #{title}, #{content}, #{writer})
+insert into tb1_board (bno, title, content, writer, filename)
+values (seq_board.nextval, #{title}, #{content}, #{writer}, #{filename})
 </insert>
 
 <insert id="insertSelectKey">
@@ -53,8 +53,8 @@ values (seq_board.nextval, #{title}, #{content}, #{writer})
 select seq_board.nextval from dual
 </selectKey>
 
-insert into tb1_board (bno,title,content,writer)
-values (#{bno}, #{title}, #{content}, #{writer})
+insert into tb1_board (bno, title, content, writer, filename)
+values (#{bno}, #{title}, #{content}, #{writer}, #{filename})
 </insert>
 
 <select id="read" resultType="org.zerock.domain.BoardVO">
@@ -66,7 +66,7 @@ delete from tb1_board where bno = #{bno}
 </delete>
 
 <update id="update">
-update tb1_board set title= #{title}, content= #{content}, writer= #{writer}, updateDate= sysdate where bno = #{bno}
+update tb1_board set title= #{title}, content= #{content}, writer= #{writer}, filename = #{filename}, updateDate= sysdate where bno = #{bno}
 </update>
 
 <update id="updateReplyCnt">

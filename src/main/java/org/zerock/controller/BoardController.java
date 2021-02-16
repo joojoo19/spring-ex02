@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.PageDTO;
 import org.zerock.service.BoardService;
+import org.zerock.service.FileUpService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -23,6 +25,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class BoardController {
 	private BoardService service;
+	private FileUpService fileUpSvc;
 	
 /*	@RequestMapping(value = "/list", method = RequestMethod.GET)*/
 	@GetMapping("/list")
@@ -37,13 +40,21 @@ public class BoardController {
 	}
 	
 	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr) {
+	public String register(BoardVO board, RedirectAttributes rttr, MultipartFile file) {
 //		BoardVO board = new BoardVO();
 //		board.getTitle(request.getParameter("title"));
 //		board.getContent(request.getParameter("content"));
 //		board.getWriter(request.getParameter("writer"));
 		
+		board.setFilename("");
+		
 		service.register(board);
+		if(file != null) {
+			board.setFilename(board.getBno() + "_" + file.getOriginalFilename());
+			service.modify(board);
+			fileUpSvc.write(file, board.getFilename());
+		}
+
 		rttr.addFlashAttribute("result", board.getBno());
 		rttr.addFlashAttribute("message", board.getBno() + "번 글이 등록 되었습니다");
 		

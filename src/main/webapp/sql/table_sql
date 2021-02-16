@@ -1,0 +1,37 @@
+-- board table
+
+CREATE SEQUENCE seq_board;
+
+CREATE TABLE tb1_board (
+bno number(10, 0) not null,
+title varchar2(200) not null,
+content varchar2(2000) not null,
+writer varchar2(50) not null,
+regdate date DEFAULT sysdate,
+updateDate date DEFAULT sysdate
+);
+
+alter table tb1_board add constraint pk_board primary key(bno);
+
+
+-- reply table
+CREATE TABLE tb1_reply (
+rno number(10, 0),
+bno number(10, 0) not null,
+reply varchar2(1000) not null,
+replyer varchar2(50) not null,
+replyDate date DEFAULT sysdate,
+updateDate date DEFAULT sysdate
+);
+
+CREATE SEQUENCE seq_reply;
+
+alter table tb1_reply add constraint pk_reply primary key(rno);
+
+alter table tb1_reply add constraint fk_reply_board foreign key(bno)
+REFERENCES tb1_board (bno);
+
+
+ALTER TABLE tb1_board ADD (replycnt NUMBER default 0);
+
+ALTER TABLE tb1_board ADD (filename VARCHAR2(200));

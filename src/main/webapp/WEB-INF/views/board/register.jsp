@@ -26,7 +26,7 @@
 
 			<div class="col-10 col-sm-6">
 						<h1>게시물 작성</h1>
-			<form action="/board/register" method="post">
+			<form action="/board/register" method="post" enctype="multipart/form-data">
 				<div class="form-group">
 					<label for="input1">제목</label> <input
 						type="text" class="form-control" name="title" id="input1">
@@ -39,6 +39,10 @@
 								<div class="form-group">
 					<label for="input2">작성자</label> <input
 						type="text" class="form-control" name="writer" id="input2">
+				</div>
+				<div class="form-group">
+					<label for="input3">파일첨부</label> <input
+						type="file" class="form-control" name="file" id="input3" accept="image/*"> <!-- 여러개를 넣고 싶을때는 multiple -->
 				</div>
 				<button type="submit" class="btn btn-primary">등록</button>
 			</form>
