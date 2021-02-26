@@ -171,7 +171,7 @@ $(document).ready(function() {
 									class="form-control" name="content"><c:out value="${board.content }"/></textarea></td>
 						</tr>
 												<tr>
-							<td colspan="4"><img class="img-fluid" src="/static/${board.filename }"></td>
+							<td colspan="4"><img class="img-fluid" src="${staticPath }${board.filename }"></td>
 						</tr>
 					</tbody>
 				</table>

@@ -52,7 +52,12 @@ public class BoardController {
 		if(file != null) {
 			board.setFilename(board.getBno() + "_" + file.getOriginalFilename());
 			service.modify(board);
-			fileUpSvc.write(file, board.getFilename());
+			// fileUpSvc.write(file, board.getFilename());
+			try {
+			fileUpSvc.transfer(file, board.getFilename());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		rttr.addFlashAttribute("result", board.getBno());
